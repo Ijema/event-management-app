@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .nav-links{
+        background-color: white;
+        color: rgb(7, 117, 7);
+        border-radius: 10px;
+        /* padding: 10px; */
+        font-size: 23px;    
+        font-weight: bold;
+    }
+    
+    .activate {
+        background-color: rgb(7, 117, 7);
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-weight: bold;
+    }
+}
