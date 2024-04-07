@@ -1,0 +1,52 @@
+.cards{
+    width: 280px;
+}
+
+.cards img{
+    width: 280px;
+    height: 350px;
+}
+
+.cards:hover{
+    transform: scale(1.05);
+    transition: 0.6s;
+}
+
+@media(max-width: 1280px){
+    .cards{
+        width: 220px;
+        font-size: 14px;
+    }
+    .cards img{
+        width: 220px;
+    }
+}
+
+@media(max-width: 1024px){
+    .cards{
+        width: 170px;
+        font-size: 13px;
+    }
+    .cards img{
+        width: 170px;
+    }
+}
+
+@media(max-width: 800px){
+    .cards{
+        width: 120px;
+        font-size: 12px;
+    }
+    .cards img{
+        width: 120px;
+    }
+}
+
+@media(max-width: 500px){
+    .cards{
+        width: 160px;
+    }
+    .cards img{
+        width: 160px;
+    }
+}

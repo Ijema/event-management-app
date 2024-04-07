@@ -1,4 +1,5 @@
-const port = 4000
+require('dotenv').config()
+const port = process.env.PORT
 const express = require("express")
 const app = express()
 const mongoose = require('mongoose')
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(cors())
 
 // Database Connection with Mongodb
-mongoose.connect("mongodb+srv://Event_management_app:Event_management_app@cluster0.u6tlr8y.mongodb.net/")
+mongoose.connect(process.env.DB_URL)
 
 // API Creation
 
@@ -60,9 +61,142 @@ app.post('/signup', async(req,res)=>{
     })
 
     await user.save()
+
+    // create a token for the password
+    const data ={
+        user: {
+            id: user.id
+        }
+    }
+    const token = jwt.sign(data, 'secret_ecom')
+    res.json({success:true, token})
+    
 })
 
-app.listen(port, (error)=>{
+// Endpoint For Login
+app.post('/login', async(req,res)=>{
+    let user = await Users.findOne({email:req.body.email})
+    if(user){
+        const checkPassword = req.body.password === user.password
+        if(checkPassword){
+            const data ={
+                user:{
+                    id: user.id
+                }
+            }
+            const token = jwt.sign(data, "secret_ecom")
+            res.json({success:true, token})
+        } else {
+            res.json({success:false, errors:"Wrong Password"})
+        }
+    } else {
+        res.json({success:false, errors: "Wrong Email Address Entered"})
+    }
+})
+
+// Image Storage Engine
+const storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req,file,cb) =>{
+        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+    }
+})
+
+const upload = multer({storage: storage})
+
+// Creating Upload Endoints for Images
+app.use('/images', express.static('upload/images'))
+
+app.post("/upload", upload.single('portfolio'), (req,res) =>{
+    res.json({
+        success: 1,
+        image_url: `http://localhost:${port}/images/${req.file.filename}`
+    })
+})
+
+
+// Creating a Schema for the Portfolios
+const Portfolio = mongoose.model('Portfolio', {
+    id: {
+        type: Number,
+        required: true,
+    },
+    name:{
+        type: String,
+        required: true,
+    },
+    image:{
+        type: String,
+        required: true,
+    },
+    category:{
+        type: String,
+        required: true,
+    },
+    location:{
+        type: String,
+        required: true,
+    },
+    date:{
+        type: Date,
+        required: true,
+    }
+})
+
+// Endpoint for adding portfolios
+app.post('/addportfolio', async(req, res)=>{
+    let portfolios = await Portfolio.find({})
+    let id
+    if (portfolios.length>0) {
+        let last_portfolio_array = portfolios.slice(-1)
+        let last_portfolio = last_portfolio_array[0]
+        id = last_portfolio.id+1
+    } else {
+        id = 1
+    }
+    const portfolio = new Portfolio ({
+        id: id,
+        name: req.body.name,
+        image: req.body.image,
+        category: req.body.category,
+        location: req.body.location,
+        date: req.body.date,
+    })
+    console.log(portfolio)
+    await portfolio.save()
+    console.log("Saved")
+    res.json({
+        success: true,
+        name: req.body.name
+    })
+})
+
+// Delete Portfolio Endpoint
+app.post('/removeportfolio', async(req,res)=>{
+    await Portfolio.findOneAndDelete({id:req.body.id})
+    console.log("Removed")
+    res.json({
+        success: true,
+        name: req.body.name
+    })
+})
+
+// Creating Endpoints to display all portfolios
+app.get('/allportfolio', async(req,res)=>{
+    let portfolio = await Portfolio.find({})
+    console.log("All Portfolio Fetched")
+    res.send(portfolio)
+})
+
+//Create Endpoints to display categories of portfolio
+app.get('/portfolio/:category', async (req, res)=>{
+    const { category } = req.params
+    let portfolioDisplay = await Portfolio.find({category})
+    console.log(`Portfolio in ${category} Fetched`);
+    res.send(portfolioDisplay)
+})
+
+app.listen(port || 4000, (error)=>{
     if (!error) {
         console.log("Server running on port " + port)
     } else {

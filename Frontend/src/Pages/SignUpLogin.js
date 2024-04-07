@@ -5,30 +5,59 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 const SignUpLogin = () => {
-  const [fullname, setFullname] = useState('')
-  const [email, setEmail] = useState('')
-  const [mobileNumber, setMobileNumber] = useState('')
-  const [address, setAddress] = useState('')
   const [state, setState] = useState("Sign Up")
+  const [userData, setUserData] = useState({
+    name: "",
+    number: "",
+    address: "",
+    email: "",
+    password: ""
+  })
 
-  const handleRegistration = async () => {
-    const userData = {
-      fullname,
-      email,
-      mobileNumber,
-      address,
-    };
-  
-    try {
-      const response = await axios.post('http://localhost:3000/api/register', userData);
-      console.log(response.data); // Log the response from the backend
-      // Optionally, you can display a success message to the user
-    } catch (error) {
-      console.error(error); // Log any errors
-      // Optionally, you can display an error message to the user
+  const getData = (e) =>{
+    setUserData({...userData, [e.target.name]:e.target.value})
+  }
+
+  const login = async () =>{
+    console.log("Login executed successfully", userData)
+    let responseData
+    await fetch('http://localhost:4000/login', {
+      method: "POST",
+      headers: {
+        Accept: 'application/form-data',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    }).then((response) => response.json()).then((data)=>responseData=data)
+    if(responseData.success){
+      localStorage.setItem('auth-token', responseData.token)
+      window.location.replace('/')
+    } else{
+      alert(responseData.errors)
     }
-  };
-  
+  }
+
+  // Sign Up
+  const signup = async() => {
+    console.log("Registration successfully", userData)
+    let responseData
+    await fetch('http://localhost:4000/signup', {
+      method: "POST",
+      headers: {
+        Accept: 'application/form-data',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    }).then((response) => response.json()).then((data)=>responseData=data)
+    if(responseData.success){
+      localStorage.setItem('auth-token', responseData.token)
+      window.location.replace('/')
+    } else{
+      alert(responseData.errors)
+    }
+
+  }
+
   return (
     <div>
       <div className='flex items-center justify-center mb-3'>
@@ -46,32 +75,35 @@ const SignUpLogin = () => {
                           className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                           type='text' 
                           placeholder='Enter your name'
-                          value={fullname}
-                          onChange={(e) => setFullname(e.target.value)}
+                          name='name'
+                          value={userData.name}
+                          onChange={getData}
                           required
                       />
                   </div>
 
-                  <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
+                  <div cllassName='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
                     <label className='mr-5 text-md'>Mobile number: </label>
                     <input 
                       className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                       type='number' 
-                      placeholder='Enter your mobile number' 
-                      value={mobileNumber}
-                      onChange={(e) => setMobileNumber(e.target.value)}
+                      placeholder='Enter your mobile number'
+                      name='number' 
+                      value={userData.number}
+                      onChange={getData}
                       required
                     />
                 </div>
-
+      
                 <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
                   <label className='mr-5 text-md'>Address: </label>
                   <input 
                     className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                     type='text'
                     placeholder='Enter address'
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    name='address'
+                    value={userData.address}
+                    onChange={getData}
                   />
                 </div>
                 </>
@@ -84,9 +116,10 @@ const SignUpLogin = () => {
                 className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                 type='email' 
                 placeholder='Enter your email' 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
+                name='email'
+                value={userData.email}
+                onChange={getData}               
+              />
             </div>
 
             <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
@@ -95,20 +128,31 @@ const SignUpLogin = () => {
                 className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                 type='password'
                 placeholder='Enter password'
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                name='password'
+                value={userData.password}
+                onChange={getData}
               />
             </div>
 
-          <button 
-            className='bg-orange-500 ml-[80%] py-1 mt-4 mb-2 text-xl text-white border border-slate-300 hover:border-green-900 rounded-md' 
-            onClick={handleRegistration}
-            >
-              {state}
-          </button>
-            
+            {state === "Sign Up" ? (
+                <button 
+                    className='bg-orange-500 ml-[80%] py-1 mt-4 mb-2 text-xl text-white border border-slate-300 hover:border-green-900 rounded-md' 
+                    onClick={signup}
+                >
+                    {state}
+                </button>
+            ) : (
+                <button 
+                    className='bg-orange-500 ml-[80%] py-1 mt-4 mb-2 text-xl text-white border border-slate-300 hover:border-green-900 rounded-md' 
+                    onClick={login}
+                >
+                    {state}
+                </button>
+            )}
+
+      
           {state==="Sign Up"
-            ? <p>Already a user? <span onClick={() => setState("Login")} className=''>Login here.</span></p> : <p>Create an account? <span onClick={()=>setState("Sign Up")}className=''>click here.</span></p>
+            ? <p>Already a user? <span onClick={() => setState("Login")} className='underline text-orange-500 cursor-pointer'>Login here.</span></p> : <p>Create an account? <span onClick={()=>setState("Sign Up")} className='underline text-orange-500 cursor-pointer'>click here.</span></p>
           }
         </div>
       </div>
