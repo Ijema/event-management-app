@@ -121,11 +121,11 @@ const Portfolio = mongoose.model('Portfolio', {
         type: Number,
         required: true,
     },
-    name:{
+    name: {
         type: String,
         required: true,
     },
-    image:{
+    image: {
         type: String,
         required: true,
     },
@@ -196,7 +196,84 @@ app.get('/portfolio/:category', async (req, res)=>{
     res.send(portfolioDisplay)
 })
 
-app.listen(port || 4000, (error)=>{
+// Creating a schema for booking event
+
+const booking = mongoose.model('Booking', {
+    id: {
+        type: Number,
+        required: true
+    },
+    name:{
+        type: String,
+        required: true
+    },
+    email:{
+        type: String,
+        required: true
+    },
+    number:{
+        type: Number,
+        required: true
+    },
+    eventType:{
+        type: String,
+        required: true
+    },
+    countryOfEvent:{
+        type: String,
+        required: true
+    },
+    stateOfEvent:{
+        type: String,
+        required: true
+    },
+    locationOfEvent:{
+        type: String,
+        required: true
+    },
+    numOfGuest:{
+        type: Number,
+        required: true
+    },
+    dateOfEvent:{
+        type: Date,
+        required: true
+    },
+    beginingTime:{
+        type: String,
+        required: true
+    },
+    endingTime:{
+        type: String,
+        required: true
+    },
+    description:{
+        type: Text,
+        required: true
+    },
+})
+
+// Creating booking endpoint
+app.post('/book', async(req,res)=>{
+    const booking = new BookingsPage({
+        name: req.body.name,
+        email: req.body.email,
+        number: req.body.number,
+        eventType: req.body.eventType,
+        countryOfEvent: req.body.countryOfEvent,
+        stateOfEvent: req.body.stateOfEvent,
+        locationOfEvent: req.body.locationOfEvent,
+        numOfGuest: req.body.numOfGuest,
+        dateOfEvent: req.body.dateOfEvent,
+        beginingTime: req.body.beginingTime,
+        endingTime: req.body.endingTime,
+        description: req.body.description
+    })
+
+    await booking.save()
+})
+
+app.listen(port, (error)=>{
     if (!error) {
         console.log("Server running on port " + port)
     } else {

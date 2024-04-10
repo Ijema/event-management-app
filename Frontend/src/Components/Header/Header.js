@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from '../Assets/Logo.png'
+import Logo from '../Assets/Header-Logo.png'
+import facebook from '../Assets/facebook-icon.png'
+import instagram from '../Assets/instagram-icon.png'
+import youtube from '../Assets/youtube-icon.png'
 import './Header.css'
 
 const Header = () => {
@@ -18,15 +21,22 @@ const Header = () => {
     return(
         <div class="header">
             <div class="header-top">
-                <img className='w-[80px] h-[50px]' src={Logo} alt="" />
+                <div className="header-logo">
+                    <img src={Logo} alt="" />
+                    <p>EVENT POP</p>
+                </div>
                 <p>info.eventpop@gmail.com</p>
-                <p>social Icons</p>
+                <div className="header-social-icons">
+                    <img src={facebook} alt="" />
+                    <img src={instagram} alt="" />
+                    <img src={youtube} alt="" />
+                </div>
                 {localStorage.getItem('auth-token')
                     ? <button onClick={() =>{localStorage.removeItem('auth-token'); window.location.replace('/')}}>Logout</button>
                     : <Link to='/login' className='link'><button>Login</button></Link>
                 }
             </div>
-            <div class="menu">
+            <div class="header-menu">
                 <div></div>
                 <nav>
                     <ul>
@@ -37,7 +47,7 @@ const Header = () => {
                                 <option value='/wedding'>Weddings</option>
                                 <option value='/concert'>Concert</option>
                                 <option value='/birthday'>Birthday</option>
-                                <option value='/conference'>Conferences</option>
+                                <option value='/conference'>Conference</option>
                             </select>
                         </li>
                         <li><Link to="/bookings">Bookings</Link></li>

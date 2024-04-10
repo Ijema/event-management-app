@@ -2,27 +2,17 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import './SelectedPortfolio.css'
 import PortfolioCards from '../PortfolioCards/PortfolioCards'
+import { displaySelectedPortfolioRoute } from '../../Utils/ApiRoutes'
 
 const SelectedPortfolio = ({ category }) => {
     const [selectedPortfolio, setSelectedPortfolio] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:4000/portfolio/${category}`)
+        fetch(`displaySelectedPortfolioRoute/${category}`)
         .then((response)=>response.json())
         .then((data)=>setSelectedPortfolio(data))
       },[category])
 
-    // useEffect(() => {
-    //     const fetchSelectedPortfolio = async () =>{
-    //         try {
-    //             const response = await axios.get('http://localhost:4000/portfolio/${category}')
-    //             setSelectedPortfolio(response.data)
-    //         } catch (error) {
-    //             console.log('Error Fetching Portfolio', error)
-    //         }
-    //     }
-    //     fetchSelectedPortfolio()
-    // }, [category])
 
   return (
     <div className='portfolio'>

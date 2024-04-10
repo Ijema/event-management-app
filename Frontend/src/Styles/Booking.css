@@ -1,0 +1,157 @@
+.booking{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.booking-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+.booking-form h2{
+    font-size: 25px;
+    font-weight: bold;
+    padding: 30px 0px;
+    text-transform: capitalize;
+}
+.booking-body{
+    /* relative w-[50%] sm:w-full sm:flex sm:flex-col bg-green-400 rounded-lg px-4 sm:px-1 py-4 */
+    width: 50%;
+    background-color: rgb(80, 163, 80);
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 40px;
+}
+.booking-fields, .booking-time-label{
+    /* w-full sm:flex sm:flex-col sm:items-start items-center my-2 */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.booking-fields label, .booking-time-label{
+    font-weight: 600;
+}
+.booking-fields input, .booking-fields select{
+    max-width: 80%;
+    width: 75%;
+    height: 35px;
+    border-radius: 4px;
+    display: flex;
+    padding: 0px 5px;
+    outline: none;
+}
+.booking-fields input::placeholder{
+    color: black;
+}
+.booking-body button{
+    width: 100px;
+    height: 30px;
+    margin: 60px 0px 30px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    background-color: orangered;
+    font-size: 19px;
+    font-weight: 500;
+    border-radius: 5px;
+    border: none;
+}
+
+.booking-body button:active{
+    color: white;
+    background-color: rgb(80, 163, 80);
+}
+
+.booking-body p{
+    font-size: 17px;
+}
+.booking-body span{
+    cursor: pointer;
+    text-decoration: underline;
+}
+.booking-fields textarea{
+    width: 75%;
+    height: 150px;
+}
+
+@media(max-width: 1024px){
+    .booking-fields{
+        font-size: 16px;
+    }
+    .booking-body button{
+        font-size: 17px;
+    }
+    .booking-body p, .booking-body span{
+        font-size: 15px;
+    }
+}
+
+@media(max-width: 1280px){
+    .booking-body{
+        width: 80%;
+    }
+    .booking-fields input, .booking-fields select, .booking-fields textarea{
+        max-width: 80%;
+        width: 70%;
+    }
+    .booking-fields, .booking-time-label{
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+    .booking-body button{
+        font-size: 14px;
+    }
+}
+
+@media(max-width: 850px){
+    .booking-body{
+        width: 80%;
+    }
+    .booking-fields input, .booking-fields select, .booking-fields textarea{
+        max-width: 80%;
+        width: 70%;
+    }
+    .booking-fields, .booking-time-label{
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width: 619px){
+    .booking-fields, .booking-time-label{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .booking-fields, .booking-time-label{
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    .booking-fields p, .booking-fields span{
+        font-size: 11px;
+    }
+    .booking-body{
+        width: 95%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .booking-body button{
+        margin-bottom: 20px;
+        margin-top: 30px;
+        font-size: 12px;
+        width: 70px;
+    }
+    .booking-fields-date{
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    .booking-fields input, .booking-fields select, .booking-fields textarea{
+        max-width: 80%;
+        width: 65%;
+    }
+}

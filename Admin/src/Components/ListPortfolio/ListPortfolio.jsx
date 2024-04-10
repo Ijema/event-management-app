@@ -3,17 +3,17 @@ import './ListPortfolio.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import cross_icon from '../../assets/cross_icon.png'
+import { removePortfolioRoute, displayAllPortfolioRoute } from '../../Utils/AdminApiRoutes'
 
 const ListPortfolio = () => {
 
   const[allPortfolio, setAllPortfolio] = useState([])
 
   const fetchInfo = async () =>{
-    await fetch('http://localhost:4000/allportfolio')
+    await fetch(displayAllPortfolioRoute)
     .then((res) =>res.json())
     .then((data) =>{setAllPortfolio(data)})
   }
-
 
   // Call fetchInfo function when the page load
   useEffect(() => {
@@ -21,7 +21,7 @@ const ListPortfolio = () => {
   }, [])
 
   const removeportfolio = async (id) =>{
-    await fetch('http://localhost:4000/removeportfolio', {
+    await fetch(removePortfolioRoute, {
       method: "POST",
       headers: {
         Accept: 'application/json',

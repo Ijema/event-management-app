@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import bookingHeader from '../Components/Assets/Book-Us-Now-header.png'
-import { Link } from 'react-router-dom'
+import { loginRoute, signUpRoute } from '../Utils/ApiRoutes'
+import '../Styles/SignupLogin.css'
 
-import axios from 'axios'
 
 const SignUpLogin = () => {
   const [state, setState] = useState("Sign Up")
@@ -21,7 +21,7 @@ const SignUpLogin = () => {
   const login = async () =>{
     console.log("Login executed successfully", userData)
     let responseData
-    await fetch('http://localhost:4000/login', {
+    await fetch(loginRoute, {
       method: "POST",
       headers: {
         Accept: 'application/form-data',
@@ -41,7 +41,7 @@ const SignUpLogin = () => {
   const signup = async() => {
     console.log("Registration successfully", userData)
     let responseData
-    await fetch('http://localhost:4000/signup', {
+    await fetch(signUpRoute, {
       method: "POST",
       headers: {
         Accept: 'application/form-data',
@@ -60,19 +60,18 @@ const SignUpLogin = () => {
 
   return (
     <div>
-      <div className='flex items-center justify-center mb-3'>
+      <div className='signup-login'>
         <img className='w-[80%] h-[300px]' src={bookingHeader} alt='' />
       </div>
-      <div className='w-12/12 flex flex-col items-center content-center justify-center'>
-        <h2 className="text-2xl font-bold mx-3 pt-5 pb-4">{state}</h2>
-        <div className='relative w-[50%] flex flex-col bg-green-400 rounded-lg px-4 py-4'>
+      <div className='signup-login-form'>
+        <h2>{state}</h2>
+        <div className='signup-login-body'>
 
             {state === "Sign Up"
                 ? <>
-                    <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
+                    <div className='signup-login-fields'>
                       <label className='mr-5 text-md'>Fullname:</label>
                       <input 
-                          className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                           type='text' 
                           placeholder='Enter your name'
                           name='name'
@@ -82,10 +81,9 @@ const SignUpLogin = () => {
                       />
                   </div>
 
-                  <div cllassName='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
-                    <label className='mr-5 text-md'>Mobile number: </label>
+                  <div className='signup-login-fields'>
+                    <label className='mr-5 text-md'>Number:</label>
                     <input 
-                      className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                       type='number' 
                       placeholder='Enter your mobile number'
                       name='number' 
@@ -95,10 +93,9 @@ const SignUpLogin = () => {
                     />
                 </div>
       
-                <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
+                <div className='signup-login-fields'>
                   <label className='mr-5 text-md'>Address: </label>
                   <input 
-                    className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                     type='text'
                     placeholder='Enter address'
                     name='address'
@@ -110,22 +107,20 @@ const SignUpLogin = () => {
                 : <></>
             }
 
-            <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
-              <label className='mr-5 text-md'>Email address: </label>
+            <div className='signup-login-fields'>
+              <label className='mr-5 text-md'>Email</label>
               <input 
-                className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                 type='email' 
-                placeholder='Enter your email' 
+                placeholder='Enter your email address' 
                 name='email'
                 value={userData.email}
                 onChange={getData}               
               />
             </div>
 
-            <div className='w-full sm:flex sm:flex-col sm:items-start items-center my-2'>
-              <label className='mr-5 text-md'>Password: </label>
+            <div className='signup-login-fields'>
+              <label className='mr-5 text-md'>Password:</label>
               <input 
-                className='w-70% sm:w-full text-black outline-none text-md placeholder-black py-2 px-2 my-2 rounded-sm' 
                 type='password'
                 placeholder='Enter password'
                 name='password'
@@ -135,24 +130,14 @@ const SignUpLogin = () => {
             </div>
 
             {state === "Sign Up" ? (
-                <button 
-                    className='bg-orange-500 ml-[80%] py-1 mt-4 mb-2 text-xl text-white border border-slate-300 hover:border-green-900 rounded-md' 
-                    onClick={signup}
-                >
-                    {state}
-                </button>
+                <button onClick={signup}>{state}</button>
             ) : (
-                <button 
-                    className='bg-orange-500 ml-[80%] py-1 mt-4 mb-2 text-xl text-white border border-slate-300 hover:border-green-900 rounded-md' 
-                    onClick={login}
-                >
-                    {state}
-                </button>
+                <button onClick={login}>{state}</button>
             )}
 
       
           {state==="Sign Up"
-            ? <p>Already a user? <span onClick={() => setState("Login")} className='underline text-orange-500 cursor-pointer'>Login here.</span></p> : <p>Create an account? <span onClick={()=>setState("Sign Up")} className='underline text-orange-500 cursor-pointer'>click here.</span></p>
+            ? <p>Already a user? <span onClick={() => setState("Login")}>Login here.</span></p> : <p>Create an account? <span onClick={()=>setState("Sign Up")}>click here.</span></p>
           }
         </div>
       </div>

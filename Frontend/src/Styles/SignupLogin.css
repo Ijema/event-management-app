@@ -1,0 +1,132 @@
+.signup-login{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.signup-login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+.signup-login-form h2{
+    font-size: 25px;
+    font-weight: bold;
+    padding: 30px 0px;
+    text-transform: capitalize;
+}
+.signup-login-body{
+    /* relative w-[50%] sm:w-full sm:flex sm:flex-col bg-green-400 rounded-lg px-4 sm:px-1 py-4 */
+    width: 50%;
+    background-color: rgb(80, 163, 80);
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 40px;
+}
+.signup-login-fields{
+    /* w-full sm:flex sm:flex-col sm:items-start items-center my-2 */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.signup-login-fields label{
+    font-weight: 600;
+}
+.signup-login-fields input{
+    max-width: 80%;
+    width: 75%;
+    height: 35px;
+    border-radius: 4px;
+    display: flex;
+    padding: 0px 5px;
+    outline: none;
+}
+.signup-login-fields input::placeholder{
+    color: black;
+}
+.signup-login-body button{
+    width: 90px;
+    height: 30px;
+    margin: 60px 0px 30px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    background-color: orangered;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.signup-login-body button:active{
+    color: white;
+    background-color: rgb(80, 163, 80);
+}
+
+.signup-login-body p{
+    font-size: 17px;
+}
+.signup-login-body span{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media(max-width: 1024px){
+    .signup-login-fields{
+        font-size: 16px;
+    }
+    .signup-login-body button{
+        font-size: 17px;
+    }
+    .signup-login-body p, .signup-login-body span{
+        font-size: 15px;
+    }
+}
+
+@media(max-width: 943px){
+    .signup-login-fields{
+        font-size: 14px;
+    }
+    .signup-login-body button{
+        font-size: 14px;
+    }
+    .signup-login-body p, .signup-login-body span{
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 859px){
+    /* .signup-login-fields{
+        flex-direction: column;
+    }
+    .signup-login-fields input{
+        width: 100%;
+    } */
+    .signup-login-body{
+        width: 70%;
+    }
+}
+
+@media(max-width: 619px){
+    .signup-login-fields{
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    .signup-login-fields p, .signup-login-fields span{
+        font-size: 11px;
+    }
+    .signup-login-body{
+        width: 95%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .signup-login-body button{
+        margin-bottom: 20px;
+        margin-top: 30px;
+        font-size: 12px;
+        width: 70px;
+    }
+}

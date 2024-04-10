@@ -2,6 +2,9 @@ import React from 'react'
 import './AddPortfolio.css'
 import upload_area from '../../assets/upload_area.svg'
 import { useState } from 'react'
+import { uploadImageRoute, addPortfolioRoute } from '../../Utils/AdminApiRoutes'
+
+
 
 const AddPortfolio = () => {
 
@@ -30,7 +33,7 @@ const AddPortfolio = () => {
         let formData = new FormData()
         formData.append('portfolio', image)
 
-        await fetch('http://localhost:4000/upload', {
+        await fetch(uploadImageRoute, {
             method: "POST",
             headers: {
                 Accept: "application/json"
@@ -40,7 +43,7 @@ const AddPortfolio = () => {
         if(responseData.success){
             portfolio.image = responseData.image_url
             console.log(portfolio)
-            await fetch('http://localhost:4000/addportfolio', {
+            await fetch(addPortfolioRoute, {
                 method: "POST",
             headers: {
                 Accept: "application/json",
