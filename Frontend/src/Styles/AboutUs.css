@@ -1,0 +1,15 @@
+.about-us{
+    margin: 0px 50px 50px 50px;
+    text-align: justify;
+}
+h2{
+    font-weight: bold;
+    margin-top: 70px;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+p{
+    font-size: 16px;
+    line-height: 35px;
+}

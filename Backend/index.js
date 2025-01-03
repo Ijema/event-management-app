@@ -94,6 +94,28 @@ app.post('/login', async(req,res)=>{
     }
 })
 
+// Creating Endpoints to display all users
+app.get('/allusers', async (req, res) => {
+    try {
+        let user = await Users.find({});
+        console.log("All Users Fetched");
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
+
+// Delete Users Endpoint
+app.post('/removeusers', async(req,res)=>{
+    await Users.findOneAndDelete({id:req.body.id})
+    console.log("Removed")
+    res.json({
+        success: true,
+        name: req.body.name
+    })
+})
+
 // Image Storage Engine
 const storage = multer.diskStorage({
     destination: './upload/images',
@@ -198,7 +220,7 @@ app.get('/portfolio/:category', async (req, res)=>{
 
 // Creating a schema for booking event
 
-const booking = mongoose.model('Booking', {
+const Booking = mongoose.model('Booking', {
     id: {
         type: Number,
         required: true
@@ -248,14 +270,24 @@ const booking = mongoose.model('Booking', {
         required: true
     },
     description:{
-        type: Text,
+        type: String,
         required: true
-    },
+    }
 })
 
 // Creating booking endpoint
-app.post('/book', async(req,res)=>{
-    const booking = new BookingsPage({
+app.post('/booking', async(req,res)=>{
+    let bookings = await Booking.find({})
+    let id
+    if(bookings.length>0){
+        let last_booking_array = bookings.slice(-1)
+        let last_booking = last_booking_array[0]
+        id = last_booking.id+1
+    } else {
+        id = 1
+    }
+    const booking = new Booking({
+        id: id,
         name: req.body.name,
         email: req.body.email,
         number: req.body.number,
@@ -267,11 +299,28 @@ app.post('/book', async(req,res)=>{
         dateOfEvent: req.body.dateOfEvent,
         beginingTime: req.body.beginingTime,
         endingTime: req.body.endingTime,
-        description: req.body.description
+        description: req.body.description,
     })
 
     await booking.save()
+    console.log("Booking Successfully")
+    res.json({success:true})
 })
+
+// Creating Endpoints to display all bookings
+app.get('/allbookings', async (req, res) => {
+    try {
+        let booking = await Booking.find({});
+        console.log("All Bookings Fetched");
+        res.json(booking);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
+
+
+
 
 app.listen(port, (error)=>{
     if (!error) {

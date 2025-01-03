@@ -1,7 +1,6 @@
 import React from 'react'
 import './ListPortfolio.css'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import cross_icon from '../../assets/cross_icon.png'
 import { removePortfolioRoute, displayAllPortfolioRoute } from '../../Utils/AdminApiRoutes'
 
@@ -35,7 +34,7 @@ const ListPortfolio = () => {
 
   return (
     <div className='list-portfolio'>
-      <h1>All Portfolio List</h1>
+      <h1>Portfolio List</h1>
       <div className="listportfolio-format-main">
         <p>Portfolios</p>
         <p>Title</p>

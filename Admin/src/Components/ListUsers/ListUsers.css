@@ -1,0 +1,61 @@
+.list-users{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 740px;
+    padding: 10px 50px;
+    margin: 30px;
+    border-radius: 6px;
+    background-color: #fff;
+}
+.listuser-format-main{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    padding: 20px 0px;
+    color: #454545;
+    font-size: 15px;
+    font-weight: 600;
+}
+.listuser-format{
+    align-items: center;
+    font-weight: 500;
+}
+.listuser-portfolio-icon{
+    height: 80px;
+    width: 80px;
+}
+.listuser-remove-icon{
+    cursor: pointer;
+    margin: auto;
+    background-color: red;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* .listuser-card{
+    overflow-y: auto;
+} */
+
+@media(max-width: 800px){
+    .list-users{
+        box-sizing: border-box;
+        width: 95%;
+        height: 100%;
+        padding: 10px 30px;
+        margin: 20px auto;
+    }
+    .listuser-format-main{
+        padding: 15px 0px;
+        color: #454545;
+        font-size: 12px;
+    }
+    .listuser-portfolio-icon{
+        height: 60px;
+    }
+}

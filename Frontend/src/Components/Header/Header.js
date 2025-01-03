@@ -41,7 +41,7 @@ const Header = () => {
                 <nav>
                     <ul>
                         <li onClick={()=>{SetMenu('Home')}}><Link to='/' className={menu==="home" ? "link" : <></>}>Home</Link></li>
-                        <li><a href="#">About Us</a></li>
+                        <li><Link to="/about-us">About Us</Link></li>
                         <li><select value={selectedOption} onChange={handleChange}>
                                 <option value=''>Portfolio</option>
                                 <option value='/wedding'>Weddings</option>
@@ -51,8 +51,8 @@ const Header = () => {
                             </select>
                         </li>
                         <li><Link to="/bookings">Bookings</Link></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><Link to="/about-us">Blog</Link></li>
+                        <li><Link to="/about-us">Contact Us</Link></li>
                     </ul>
                 </nav>
             </div>
