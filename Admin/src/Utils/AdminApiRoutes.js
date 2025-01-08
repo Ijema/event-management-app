@@ -1,4 +1,4 @@
-export const host = "https://uc-event-management-app-backend.vercel.app/"
+export const host = "https://uc-event-management-app-backend.vercel.app"
 export const uploadImageRoute = `${host}/upload`
 export const addPortfolioRoute = `${host}/addportfolio`
 export const removePortfolioRoute = `${host}/removeportfolio`
