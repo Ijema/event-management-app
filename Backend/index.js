@@ -309,7 +309,7 @@ app.post('/booking', async(req,res)=>{
 })
 
 // Creating Endpoints to display all bookings
-app.get('/allbookings', async (req,res)=>{
+app.get('/allbookings', async(req,res)=>{
         let booking = await Booking.find({});
         console.log("All Bookings Fetched");
         res.send(booking);
@@ -325,12 +325,6 @@ app.get('/allbookings', async (req,res)=>{
 //         res.status(500).send("Server Error");
 //     }
 // });
-
-app.get('/allportfolio', async(req,res)=>{
-    let portfolio = await Portfolio.find({})
-    console.log("All Portfolio Fetched")
-    res.send(portfolio)
-})
 
 
 
