@@ -66,6 +66,7 @@ const ListBooking = () => {
             <p>{bookings.beginingTime}</p>
             <p>{bookings.endingTime}</p>
             <p>{bookings.description}</p>
+            <hr />
             {/* <img onClick={() => {removeBookings(bookings.id)}} src={cross_icon} alt="" className="listportfolio-remove-icon" /> */}
           </div>
           <hr />

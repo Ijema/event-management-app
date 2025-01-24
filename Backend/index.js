@@ -314,6 +314,7 @@ app.get('/allbookings', async (req, res) => {
         let booking = await Booking.find({});
         console.log("All Bookings Fetched");
         res.json(booking);
+        res.send(booking);
     } catch (error) {
         console.error(error);
         res.status(500).send("Server Error");
