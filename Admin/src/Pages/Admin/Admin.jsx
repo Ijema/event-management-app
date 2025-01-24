@@ -16,8 +16,8 @@ const Admin = () => {
         <Routes>
             <Route path='/addportfolio' element={<AddPortfolio />}/>
             <Route path='/listportfolio' element={<ListPortfolio />}/>
-            <Route path='/allbookings' element={<ListBooking />}/>
-            <Route path='/allusers' element={<ListUser />}/>
+            <Route path='/listbookings' element={<ListBooking />}/>
+            <Route path='/listusers' element={<ListUser />}/>
         </Routes>
     </div>
   )

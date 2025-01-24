@@ -20,13 +20,13 @@ const Sidebar = () => {
                 <p>Portfolio List</p>
             </div>
         </Link>
-        <Link to={'/allbookings'} style={{textDecoration: "none"}}>
+        <Link to={'/listbookings'} style={{textDecoration: "none"}}>
             <div className="sidebar-item">
                 <img src={list_product_icon} alt="" />
                 <p>Booking List</p>
             </div>
         </Link>
-        <Link to={'/allusers'} style={{textDecoration: "none"}}>
+        <Link to={'/listusers'} style={{textDecoration: "none"}}>
             <div className="sidebar-item">
                 <img src={user_icon} alt="" className='user-img'/>
                 <p>Users</p>
