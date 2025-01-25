@@ -38,7 +38,6 @@ const ListBooking = () => {
       <div className="listportfolio-format-main">
         <p>Name</p>
         <p>Email</p>
-        <p>Phone Number</p>
         <p>Event Category</p>
         <p>Country</p>
         <p>State</p>
@@ -48,7 +47,6 @@ const ListBooking = () => {
         <p>Start time</p>
         <p>End time</p>
         <p>Description</p>
-        <p>Delete</p>
       </div>
       <div className="listportfolio-allportfolios">
         <hr />

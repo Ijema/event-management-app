@@ -6,7 +6,7 @@ import AddProduct from '../../Components/AddProduct/AddProduct.jsx'
 // import ListProduct from '../../Components/ListProduct/ListProduct'
 import ListPortfolio from '../../Components/ListPortfolio/ListPortfolio.jsx'
 import ListBooking from '../../Components/ListBooking/ListBooking.jsx'
-import ListUser from '../../Components/ListUsers/ListUsers.jsx'
+import ListUsers from '../../Components/ListUsers/ListUsers.jsx'
 import AddPortfolio from '../../Components/AddPortfolio/AddPortfolio.jsx'
 
 const Admin = () => {
@@ -17,7 +17,7 @@ const Admin = () => {
             <Route path='/addportfolio' element={<AddPortfolio />}/>
             <Route path='/listportfolio' element={<ListPortfolio />}/>
             <Route path='/listbookings' element={<ListBooking />}/>
-            <Route path='/listusers' element={<ListUser />}/>
+            <Route path='/listusers' element={<ListUsers />}/>
         </Routes>
     </div>
   )
