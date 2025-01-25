@@ -132,7 +132,7 @@ app.use('/images', express.static('upload/images'))
 app.post("/upload", upload.single('portfolio'), (req,res) =>{
     res.json({
         success: 1,
-        image_url: `https://uc-event-management-backend-f1f1833e6850.herokuapp.com/images/${req.file.filename}`
+        image_url: `https://event-management-app-1210cd769629.herokuapp.com/images/${req.file.filename}`
         // image_url: `http://localhost:${port}/images/${req.file.filename}`
     })
 })
