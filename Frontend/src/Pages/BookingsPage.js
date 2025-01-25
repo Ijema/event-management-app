@@ -24,19 +24,24 @@ const BookingsPage = () => {
     setBookingData({...bookingData, [e.target.name]:e.target.value})
   }
 
-  const booking = async()=>{
-    await fetch(bookingRoute, {
-      method: "POST",
-      headers: {
-        Accept: '/application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(bookingData)
-    })
-    .then((response) => response.json()).then((data)=>{
-      data.success?alert("Booking Successful") : alert("Booking Failed")
-    })
-  }
+  const booking = async () => {
+    try {
+      const response = await fetch(bookingRoute, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Booking successful:', data);
+    } catch (error) {
+      console.error('Error booking:', error);
+    }
+  };
 
   return (
     <div>
