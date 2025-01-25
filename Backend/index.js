@@ -306,7 +306,7 @@ app.post('/booking', async(req,res)=>{
     await booking.save()
     console.log("Booking Successfully")
     res.json({success:true})
-})
+});
 
 // Creating Endpoints to display all bookings
 // app.get('/allbookings', async(req,res)=>{
