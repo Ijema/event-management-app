@@ -6,16 +6,11 @@ import { removeBookingRoute, listBookingRoute } from '../../Utils/AdminApiRoutes
 const ListBooking = () => {
     const [allBookings, setAllBookings] = useState([]);
 
-    const fetchInfo = async () => {
-        try {
-            const response = await fetch(listBookingRoute);
-            if (!response.ok) throw new Error("Failed to fetch bookings");
-            const data = await response.json();
-            setAllBookings(data);
-        } catch (error) {
-            console.error("Error fetching bookings:", error);
-        }
-    };
+    const fetchInfo = async () =>{
+        await fetch(listBookingRoute)
+        .then((res) =>res.json())
+        .then((data) =>{setAllBookings(data)})
+      }
 
     // Fetch bookings when the component loads
     useEffect(() => {
