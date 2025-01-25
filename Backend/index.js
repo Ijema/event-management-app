@@ -137,6 +137,88 @@ app.post("/upload", upload.single('portfolio'), (req,res) =>{
     })
 })
 
+
+// Creating a Schema for the Portfolios
+const Portfolio = mongoose.model('Portfolio', {
+    id: {
+        type: Number,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true,
+    },
+    category:{
+        type: String,
+        required: true,
+    },
+    location:{
+        type: String,
+        required: true,
+    },
+    date:{
+        type: Date,
+        required: true,
+    }
+})
+
+// Endpoint for adding portfolios
+app.post('/addportfolio', async(req, res)=>{
+    let portfolios = await Portfolio.find({})
+    let id
+    if (portfolios.length>0) {
+        let last_portfolio_array = portfolios.slice(-1)
+        let last_portfolio = last_portfolio_array[0]
+        id = last_portfolio.id+1
+    } else {
+        id = 1
+    }
+    const portfolio = new Portfolio ({
+        id: id,
+        name: req.body.name,
+        image: req.body.image,
+        category: req.body.category,
+        location: req.body.location,
+        date: req.body.date,
+    })
+    console.log(portfolio)
+    await portfolio.save()
+    console.log("Saved")
+    res.json({
+        success: true,
+        name: req.body.name
+    })
+})
+
+// Delete Portfolio Endpoint
+app.post('/removeportfolio', async(req,res)=>{
+    await Portfolio.findOneAndDelete({id:req.body.id})
+    console.log("Removed")
+    res.json({
+        success: true,
+        name: req.body.name
+    })
+})
+
+// Creating Endpoints to display all portfolios
+app.get('/allportfolio', async(req,res)=>{
+    let portfolio = await Portfolio.find({})
+    console.log("All Portfolio Fetched")
+    res.send(portfolio)
+})
+
+//Create Endpoints to display categories of portfolio
+app.get('/portfolio/:category', async (req, res)=>{
+    const { category } = req.params
+    let portfolioDisplay = await Portfolio.find({category})
+    console.log(`Portfolio in ${category} Fetched`);
+    res.send(portfolioDisplay)
+})
+
 // Creating a schema for booking event
 
 const Booking = mongoose.model('Booking', {
@@ -232,98 +314,17 @@ app.post('/booking', async(req,res)=>{
 //         console.log("All Bookings Fetched");
 //         res.send(booking);
 // });
-app.get('/allbookings', async (req,res)=>{
+app.get('/allbookings', async (req, res) => {
     try {
-        let booking = await Booking.find({});
+        const bookings = await Booking.find({});
         console.log("All Bookings Fetched");
-        res.json(booking);
-        res.send(booking);
+        res.json(bookings); // Properly send JSON response
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching bookings:", error);
         res.status(500).send("Server Error");
     }
 });
 
-// Creating a Schema for the Portfolios
-const Portfolio = mongoose.model('Portfolio', {
-    id: {
-        type: Number,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-    category:{
-        type: String,
-        required: true,
-    },
-    location:{
-        type: String,
-        required: true,
-    },
-    date:{
-        type: Date,
-        required: true,
-    }
-})
-
-// Endpoint for adding portfolios
-app.post('/addportfolio', async(req, res)=>{
-    let portfolios = await Portfolio.find({})
-    let id
-    if (portfolios.length>0) {
-        let last_portfolio_array = portfolios.slice(-1)
-        let last_portfolio = last_portfolio_array[0]
-        id = last_portfolio.id+1
-    } else {
-        id = 1
-    }
-    const portfolio = new Portfolio ({
-        id: id,
-        name: req.body.name,
-        image: req.body.image,
-        category: req.body.category,
-        location: req.body.location,
-        date: req.body.date,
-    })
-    console.log(portfolio)
-    await portfolio.save()
-    console.log("Saved")
-    res.json({
-        success: true,
-        name: req.body.name
-    })
-})
-
-// Delete Portfolio Endpoint
-app.post('/removeportfolio', async(req,res)=>{
-    await Portfolio.findOneAndDelete({id:req.body.id})
-    console.log("Removed")
-    res.json({
-        success: true,
-        name: req.body.name
-    })
-})
-
-// Creating Endpoints to display all portfolios
-app.get('/allportfolio', async(req,res)=>{
-    let portfolio = await Portfolio.find({})
-    console.log("All Portfolio Fetched")
-    res.send(portfolio)
-})
-
-//Create Endpoints to display categories of portfolio
-app.get('/portfolio/:category', async (req, res)=>{
-    const { category } = req.params
-    let portfolioDisplay = await Portfolio.find({category})
-    console.log(`Portfolio in ${category} Fetched`);
-    res.send(portfolioDisplay)
-})
 
 
 app.listen(port, (error)=>{
