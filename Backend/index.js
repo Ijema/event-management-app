@@ -12,8 +12,23 @@ const cors = require("cors")
 app.use(express.json());
 // This line enables Cross-Origin Resource Sharing (CORS) in the Express application, allowing it to handle cross-origin requests
 // Configure CORS to allow requests from your frontend domain
+// List of allowed origins
+const allowedOrigins = [
+    'https://event-management-app-admin.netlify.app',
+    'https://uc-event-host.netlify.app'
+];
+
+// Configure CORS to allow requests from multiple origins
 app.use(cors({
-    origin: 'https://event-management-app-admin.netlify.app', // Replace with your frontend domain
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
