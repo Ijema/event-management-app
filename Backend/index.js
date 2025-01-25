@@ -11,10 +11,18 @@ const cors = require("cors")
 // This line enables Express to parse JSON data from incoming requests.
 app.use(express.json());
 // This line enables Cross-Origin Resource Sharing (CORS) in the Express application, allowing it to handle cross-origin requests
-app.use(cors())
+// Configure CORS to allow requests from your frontend domain
+app.use(cors({
+    origin: 'https://event-management-app-admin.netlify.app', // Replace with your frontend domain
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+}));
 
 // Database Connection with Mongodb
-mongoose.connect(process.env.DB_URL)
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log(err));
+
 
 // API Creation
 
