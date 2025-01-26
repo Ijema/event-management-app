@@ -11,27 +11,27 @@ const cors = require("cors")
 // This line enables Express to parse JSON data from incoming requests.
 app.use(express.json());
 // This line enables Cross-Origin Resource Sharing (CORS) in the Express application, allowing it to handle cross-origin requests
-// Configure CORS to allow requests from your frontend domain
-// List of allowed origins
+// Configure CORS to allow requests from multiple origins
 const allowedOrigins = [
     'https://event-management-app-admin.netlify.app',
     'https://uc-event-host.netlify.app'
 ];
 
-// Configure CORS to allow requests from multiple origins
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
+        if (!origin) return callback(null, true); // Allow requests with no origin (e.g., mobile apps or Postman)
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true); // Allow requests from allowed origins
+        } else {
             const msg = 'The CORS policy for this site does not allow access from the specified origin.';
             return callback(new Error(msg), false);
         }
-        return callback(null, true);
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+    credentials: true, // Allow cookies and credentials
+    optionsSuccessStatus: 200, // Handle preflight requests gracefully
 }));
+
 
 // Database Connection with Mongodb
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
