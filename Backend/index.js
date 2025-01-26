@@ -14,23 +14,25 @@ app.use(express.json());
 // Configure CORS to allow requests from multiple origins
 const allowedOrigins = [
     'https://event-management-app-admin.netlify.app',
-    'https://uc-event-host.netlify.app'
+    'https://uc-event-host.netlify.app',
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true); // Allow requests with no origin (e.g., mobile apps or Postman)
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true); // Allow requests from allowed origins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true); // Allow requests with no origin or from allowed origins
         } else {
-            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-            return callback(new Error(msg), false);
+            callback(new Error('CORS policy: Origin not allowed.'));
         }
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
     credentials: true, // Allow cookies and credentials
-    optionsSuccessStatus: 200, // Handle preflight requests gracefully
+    optionsSuccessStatus: 200, // Handle preflight requests properly
 }));
+
+// Handle preflight requests globally
+app.options('*', cors());
+
 
 
 // Database Connection with Mongodb
